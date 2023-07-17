@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 # Check if Flatpak is installed
 if ! command -v flatpak &> /dev/null; then
     echo "Flatpak is not installed. Installing Flatpak..."
@@ -60,33 +58,9 @@ if command -v pacman &> /dev/null; then
         "thunderbird"
         "umlet")
     all_packages=(
-        "audacity"
-        "dbeaver-ce"
-        "discord"
-        "gimp"
-        "gtypist-single-space"
-        "heroic-games-launcher"
-        "htop"
-        "intellij-idea-community-edition"
-        "itch"
-        "keepassxc"
-        "kdenlive"
-        "libreoffice-fresh"
-        "lutris"
-        "mpv"
-        "nvtop"
-        "obs"
-        "prismlauncher"
-        "postman"
-        "proton-vpn"
-        "protonup-qt"
-        "spotify"
-        "steam"
-        "thunderbird"
-        "umlet"
-        "ungoogled-chromium"
-        "vim"
-        "whatsapp-for-linux")
+        "${base_packages[@]}"
+        "${game_packages[@]}"
+        "${work_packages[@]}")
 elif command -v apt-get &> /dev/null; then
     echo "Apt package manager detected."
     package_manager="apt"
@@ -122,37 +96,15 @@ elif command -v apt-get &> /dev/null; then
         "thunderbird"
         "umlet")
     all_packages=(
-        "audacity"
-        "dbeaver-ce"
-        "discord"
-        "gimp"
-        "gtypist-single-space"
-        "heroic-games-launcher"
-        "htop"
-        "intellij-idea-community-edition"
-        "itch"
-        "keepassxc"
-        "kdenlive"
-        "libreoffice-fresh"
-        "lutris"
-        "mpv"
-        "nvtop"
-        "obs"
-        "prismlauncher"
-        "postman"
-        "proton-vpn"
-        "protonup-qt"
-        "spotify"
-        "steam"
-        "thunderbird"
-        "umlet"
-        "ungoogled-chromium"
-        "vim"
-        "whatsapp-for-linux")
+        "${base_packages[@]}"
+        "${game_packages[@]}"
+        "${work_packages[@]}")
 else
     echo "Unable to determine the package manager. Exiting."
     exit 1
 fi
+
+
 
 # Prompt user for package bundle choice
 echo "Please select a package bundle to install:"
@@ -161,6 +113,8 @@ echo "2. Game Packages"
 echo "3. Work Packages"
 echo "4. All Packages"
 read -rp "Enter your choice (1-4): " choice
+
+
 
 # Install packages based on user choice
 case $choice in
@@ -181,6 +135,8 @@ case $choice in
         exit 1
         ;;
 esac
+
+
 
 # Install selected packages using the package manager
 if [ "$package_manager" == "pacman" ]; then
