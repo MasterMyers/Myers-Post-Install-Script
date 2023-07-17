@@ -9,7 +9,7 @@ if ! command -v flatpak &> /dev/null; then
         sudo pacman -Syu
         sudo pacman -S flatpak
     elif command -v apt-get &> /dev/null; then
-        sudo apt update && sudo apt upgrade
+        sudo apt update
         sudo apt-get install flatpak
     else
         echo "Unable to determine the package manager. Exiting."
@@ -40,13 +40,15 @@ if command -v pacman &> /dev/null; then
         "spotify-launcher"
         "ungoogled-chromium"
         "vim"
-        "whatsapp-for-linux")
+        "whatsapp-for-linux"
+        )
     game_packages=(
         "heroic-games-launcher"
         "lutris"
         "prismlauncher"
         "protonup-qt"
-        "steam")
+        "steam"
+        )
     work_packages=(
         "audacity"
         "dbeaver"
@@ -56,11 +58,19 @@ if command -v pacman &> /dev/null; then
         "obs-studio"
         "postman-bin"
         "thunderbird"
-        "umlet")
+        "umlet"
+        )
     all_packages=(
         "${base_packages[@]}"
         "${game_packages[@]}"
-        "${work_packages[@]}")
+        "${work_packages[@]}"
+        )
+
+    # Check if yay is installed
+    if ! command -v yay &> /dev/null; then
+        echo "Yay is not installed. Installing Yay..."
+        sudo pacman -S --needed yay
+    fi
 
 # Check if apt is installed
 elif command -v apt-get &> /dev/null; then
@@ -80,14 +90,16 @@ elif command -v apt-get &> /dev/null; then
         "spotify"
         "ungoogled-chromium"
         "vim"
-        "whatsapp-for-linux")
+        "whatsapp-for-linux"
+        )
     game_packages=(
         "heroic-games-launcher"
         "itch"
         "lutris"
         "prismlauncher"
         "protonup-qt"
-        "steam")
+        "steam"
+        )
     work_packages=(
         "audacity"
         "dbeaver-community"
@@ -97,11 +109,13 @@ elif command -v apt-get &> /dev/null; then
         "obs-studio"
         "postman"
         "thunderbird"
-        "umlet")
+        "umlet"
+        )
     all_packages=(
         "${base_packages[@]}"
         "${game_packages[@]}"
-        "${work_packages[@]}")
+        "${work_packages[@]}"
+        )
 else
     echo "Unable to determine the package manager. Exiting."
     exit 1
@@ -144,7 +158,7 @@ esac
 # Install selected packages using the package manager
 if [ "$package_manager" == "pacman" ]; then
     sudo pacman -Syu
-    yay -S "${packages[@]}"
+    yay -S --needed "${packages[@]}"
 elif [ "$package_manager" == "apt" ]; then
     sudo apt update
     sudo apt install "${packages[@]}"
