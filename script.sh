@@ -36,8 +36,8 @@ if command -v pacman &> /dev/null; then
         "keepassxc"
         "mpv"
         "nvtop"
-        "proton-vpn"
-        "spotify"
+        "protonvpn"
+        "spotify-launcher"
         "ungoogled-chromium"
         "vim"
         "whatsapp-for-linux")
@@ -49,18 +49,20 @@ if command -v pacman &> /dev/null; then
         "steam")
     work_packages=(
         "audacity"
-        "dbeaver-ce"
+        "dbeaver"
         "intellij-idea-community-edition"
         "kdenlive"
         "libreoffice-fresh"
-        "obs"
-        "postman"
+        "obs-studio"
+        "postman-bin"
         "thunderbird"
         "umlet")
     all_packages=(
         "${base_packages[@]}"
         "${game_packages[@]}"
         "${work_packages[@]}")
+
+# Check if apt is installed
 elif command -v apt-get &> /dev/null; then
     echo "Apt package manager detected."
     package_manager="apt"
@@ -69,29 +71,30 @@ elif command -v apt-get &> /dev/null; then
     base_packages=(
         "discord"
         "gimp"
-        "gtypist-single-space"
+        "gtypist"
         "htop"
         "keepassxc"
         "mpv"
         "nvtop"
-        "proton-vpn"
+        "protonvpn"
         "spotify"
         "ungoogled-chromium"
         "vim"
         "whatsapp-for-linux")
     game_packages=(
         "heroic-games-launcher"
+        "itch"
         "lutris"
         "prismlauncher"
         "protonup-qt"
         "steam")
     work_packages=(
         "audacity"
-        "dbeaver-ce"
+        "dbeaver-community"
         "intellij-idea-community-edition"
         "kdenlive"
-        "libreoffice-fresh"
-        "obs"
+        "libreoffice"
+        "obs-studio"
         "postman"
         "thunderbird"
         "umlet")
@@ -140,7 +143,9 @@ esac
 
 # Install selected packages using the package manager
 if [ "$package_manager" == "pacman" ]; then
-    sudo pacman -S "${packages[@]}"
+    sudo pacman -Syu
+    yay -S "${packages[@]}"
 elif [ "$package_manager" == "apt" ]; then
+    sudo apt update
     sudo apt install "${packages[@]}"
 fi
