@@ -79,7 +79,6 @@ elif command -v apt-get &> /dev/null; then
 
     # Define package bundles for apt
     base_packages=(
-        "discord"
         "gimp"
         "gtypist"
         "htop"
@@ -87,34 +86,46 @@ elif command -v apt-get &> /dev/null; then
         "mpv"
         "nvtop"
         "protonvpn"
+        "vim"
+        )
+    base_packages_flatpak=(
+        "discord"
         "spotify"
         "ungoogled-chromium"
-        "vim"
         "whatsapp-for-linux"
         )
     game_packages=(
+        "lutris"
+        "steam"
+        )
+    game_packages_flatpak=(
         "heroic-games-launcher"
         "itch"
-        "lutris"
         "prismlauncher"
         "protonup-qt"
-        "steam"
         )
     work_packages=(
         "audacity"
-        "dbeaver-community"
-        "intellij-idea-community-edition"
         "kdenlive"
         "libreoffice"
         "obs-studio"
-        "postman"
         "thunderbird"
+        )
+    work_packages_flatpak=(
+        "dbeaver-community"
+        "intellij-idea-community-edition"
+        "postman"
         "umlet"
         )
     all_packages=(
         "${base_packages[@]}"
         "${game_packages[@]}"
         "${work_packages[@]}"
+        )
+    all_packages_flatpak=(
+        "${base_packages_flatpak[@]}"
+        "${game_packages_flatpak[@]}"
+        "${work_packages_flatpak[@]}"
         )
 else
     echo "Unable to determine the package manager. Exiting."
@@ -137,15 +148,19 @@ read -rp "Enter your choice (1-4): " choice
 case $choice in
     1)
         packages=("${base_packages[@]}")
+        packages_flatpak=("${base_packages_flatpak[@]}")
         ;;
     2)
         packages=("${game_packages[@]}")
+        packages_flatpak=("${game_packages_flatpak[@]}")
         ;;
     3)
         packages=("${work_packages[@]}")
+        packages_flatpak=("${work_packages_flatpak[@]}")
         ;;
     4)
         packages=("${all_packages[@]}")
+        packages_flatpak=("${all_packages_flatpak[@]}")
         ;;
     *)
         echo "Invalid choice. Exiting."
@@ -162,4 +177,5 @@ if [ "$package_manager" == "pacman" ]; then
 elif [ "$package_manager" == "apt" ]; then
     sudo apt update
     sudo apt install "${packages[@]}"
+    sudo flatpak install "${packages_flatpak[@]}"
 fi
