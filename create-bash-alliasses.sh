@@ -17,7 +17,21 @@ update_alias_in_bashrc() {
 # Check if flatpak is installed and install if not
 if ! command -v flatpak &>/dev/null; then
     echo "Flatpak is not installed. Installing..."
-    # You can add the installation command for flatpak here
+
+    # Check the package manager and install Flatpak accordingly
+    if command -v pacman &> /dev/null; then
+        sudo pacman -Syu
+        sudo pacman -S flatpak
+    elif command -v apt-get &> /dev/null; then
+        sudo apt update
+        sudo apt-get install flatpak
+    else
+        echo "Unable to determine the package manager. Exiting."
+        exit 1
+    fi
+
+    # Add the Flathub repository
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 fi
 
 # Check if apt is installed
@@ -37,7 +51,7 @@ if command -v pacman &>/dev/null; then
     # Check if yay is installed and install it if not
     if ! command -v yay &>/dev/null; then
         echo "yay is not installed. Installing..."
-        # You can add the installation command for yay here
+        sudo pacman -S --needed yay
     fi
 
     alias_name="alias updateall='yay -Syu && sudo flatpak update'"
