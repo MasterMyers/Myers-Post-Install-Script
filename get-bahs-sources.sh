@@ -16,10 +16,11 @@ clone_dir="$user_home/$clone_dir_name"
 file_to_move="shell-mommy.sh"
 new_file_name=".shell-mommy.sh"
 
-# Specify the content to add to the end of the .bashrc file
-bashrc_content="# My manually added sources
-# This adds the shell-mommy file to my sources. It can now always be started with mommy <command>
+# Specify the content for .bashrc
+bashrc_content_1="# My manually added sources"
+bashrc_content_2="# This adds the shell-mommy file to my sources. It can now always be started with mommy <command>
 source ~/.shell-mommy.sh"
+bashrc_content_3="$bashrc_content_1\n$bashrc_content_2"
 
 # Check if the destination directory already exists
 if [ -d "$clone_dir" ]; then
@@ -59,13 +60,13 @@ else
   exit 1
 fi
 
-# Check if "# My manually added sources" already exists in .bashrc
-if grep -q "# My manually added sources" "$user_home/.bashrc"; then
-  # Append content below the existing line
-  awk -v text="$bashrc_content" '/# My manually added sources/{print; print text; next}1' "$user_home/.bashrc" > temp && mv temp "$user_home/.bashrc"
+# Check if bashrc_content_1 already exists in .bashrc
+if ! grep -q "$bashrc_content_1" "$user_home/.bashrc"; then
+  # Append the whole content to .bashrc
+  echo -e "$bashrc_content_3" >> "$user_home/.bashrc"
 else
-  # Append the whole content to the end of .bashrc
-  echo "$bashrc_content" >> "$user_home/.bashrc"
+  # Append only bashrc_content_2
+  echo -e "$bashrc_content_2" >> "$user_home/.bashrc"
 fi
 
 # Check if the addition to .bashrc was successful
