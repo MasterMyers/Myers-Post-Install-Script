@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#
+# This is script will clone, move and name the files I use as bash sources. It is
+# currently only used for mommy-shell. It gets mommy-shell.sh and saves it as a hidden
+# file in the users home dir. After that it changes the users variable in it from girl
+# to boy. Lastly it adds the file as a source in .bashrc. We look though bashrc for a
+# comment I use to mark manually added sources. If its there add our source right below.
+# If its not there the source gets added at the end of the file.
+
+
 # Set the URL of the Git repository you want to clone
 repo_url="https://github.com/sudofox/shell-mommy.git"
 
