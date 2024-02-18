@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#
 # This bash script aims to install all the packages I usually get after reinstalling my System. It's mainly made with EndaevourOS and Ubuntu
 # in mind. It might also work with other distros that use pacman or apt. This script does the following tasks:
 #   1. Checks if Flatpak is installed and installs it if necessary.
@@ -9,7 +8,6 @@
 #   4. Defines package bundles for both pacman and apt.
 #   5. Prompts the user for a package bundle choice.
 #   6. Installs the selected packages using the appropriate package manager (pacman or apt) and also installs the Flatpak packages if needed.
-#
 
 # Check if Flatpak is installed
 if ! command -v flatpak &> /dev/null; then
