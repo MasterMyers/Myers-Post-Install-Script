@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Bash script to create a convenient 'updateall' alias for updating system packages.
+# - Checks if Flatpak is installed and installs it if not.
+# - Determines the package manager (apt or pacman) and installs Flatpak accordingly.
+# - Adds 'updateall' alias to .bashrc, which updates system packages using apt or pacman,
+#   and also updates Flatpak and Snap packages if installed.
+# - Sources .bashrc to make the alias available immediately.
+# Usage: Run the script to set up the 'updateall' alias for package updates.
+
 # Function to add/update the alias in .bashrc
 update_alias_in_bashrc() {
     local alias_name="$1"
